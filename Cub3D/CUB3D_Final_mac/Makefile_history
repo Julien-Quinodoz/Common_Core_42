@@ -1,0 +1,298 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: jquinodo <jquinodo@student.42lausanne.c    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/05/26 19:20:52 by jquinodo          #+#    #+#              #
+#    Updated: 2025/06/17 11:06:27 by jquinodo         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+# Variables de compilation
+CC = gcc
+CFLAGS =  -g -Wall -Wextra -Werror
+NAME = cub3D
+
+# Répertoires
+INC = inc
+SRC = src
+LIBFT_DIR = ./libft
+MLX42_DIR = ./MLX42
+MAP_UTILS = map_utils
+
+# Fichiers d'en-tête
+INCLUDES = $(INC)/cub3d.h
+INC_MLX = $(MLX42_DIR)/include
+
+# Bibliothèques
+LIBFT = $(LIBFT_DIR)/libft.a
+MLX42_LIB = $(MLX42_DIR)/build/libmlx42.a
+
+# Configuration GLFW - Détection automatique du chemin
+GLFW_PREFIX = $(shell brew --prefix glfw 2>/dev/null || echo "/usr/local")
+GLFW_EXISTS = $(shell test -d "$(GLFW_PREFIX)/lib" && echo "yes" || echo "no")
+
+# Frameworks et bibliothèques système
+FRAMEWORKS = -framework Cocoa -framework OpenGL -framework IOKit
+GLFW_FLAGS = -lglfw
+
+# Configuration du chemin GLFW selon la disponibilité
+ifeq ($(GLFW_EXISTS), yes)
+	GLFW_PATH = -L"$(GLFW_PREFIX)/lib"
+else
+	GLFW_PATH = -L"/opt/homebrew/lib" -L"/usr/local/lib"
+endif
+
+# Flags de linkage complets
+LDFLAGS = $(FRAMEWORKS) $(GLFW_FLAGS) $(GLFW_PATH)
+
+# Sources mandataires
+SRCS =	$(SRC)/cub3d.c \
+		$(SRC)/draw_sprite.c \
+		$(SRC)/rays.c \
+		$(SRC)/window.c \
+		$(SRC)/render.c \
+		$(SRC)/draw1.c \
+		$(SRC)/draw2.c \
+		$(SRC)/keys_handler_1.c \
+		$(SRC)/keys_handler_2.c \
+		$(SRC)/keys_handler_3.c \
+		$(SRC)/keys_handler_4.c \
+		$(SRC)/draw_wall.c \
+		$(SRC)/utils1.c \
+		$(SRC)/utils2.c \
+		$(SRC)/init.c \
+		$(SRC)/play.c \
+		$(MAP_UTILS)/main_parser.c \
+		$(MAP_UTILS)/config_parser.c \
+		$(MAP_UTILS)/texture_parser.c \
+		$(MAP_UTILS)/color_parser.c \
+		$(MAP_UTILS)/file_reader.c \
+		$(MAP_UTILS)/map_reader.c \
+		$(MAP_UTILS)/map_validator.c \
+		$(MAP_UTILS)/map_processor.c \
+		$(MAP_UTILS)/memory.c \
+		$(MAP_UTILS)/validation.c \
+		$(MAP_UTILS)/string_utils.c \
+		$(MAP_UTILS)/get_next_line.c \
+		$(MAP_UTILS)/get_next_line_utils.c
+
+# Objets
+OBJS = $(SRCS:.c=.o)
+
+# Couleurs pour l'affichage
+GREEN = \033[0;32m
+YELLOW = \033[0;33m
+RED = \033[0;31m
+ORANGE = \033[0;38;5;214m
+NC = \033[0m # No Color
+
+# Fichier tampon pour check_glfw
+CHECK_GLFW_STAMP := .glfw_checked
+
+# Règles principales
+all: $(CHECK_GLFW_STAMP) $(NAME)
+
+$(NAME): $(LIBFT) $(MLX42_LIB) $(OBJS) $(INCLUDES)
+	@echo "$(GREEN)Compilation de $(NAME)...$(NC)"
+	$(CC) $(CFLAGS) -o $@ $(OBJS) $(LIBFT) $(MLX42_LIB) $(LDFLAGS)
+	@echo "$(GREEN)$(NAME) compilé avec succès!$(NC)"
+	@$(MAKE) ascii_art
+
+%.o: %.c $(INCLUDES)
+	@printf "\rCompilation de $< ...         "
+	@$(CC) $(CFLAGS) -I$(INC) -I$(INC_MLX) -c $< -o $@
+	@printf "\r\033[K"  # Efface la ligne
+
+# Compilation de libft
+$(LIBFT):
+	@echo "$(GREEN)Compilation de libft...$(NC)"
+	@$(MAKE) -C $(LIBFT_DIR)
+
+# Compilation de MLX42
+$(MLX42_LIB):
+	@echo "$(GREEN)Compilation de MLX42...$(NC)"
+	@if [ ! -d "$(MLX42_DIR)/build" ]; then \
+		mkdir -p $(MLX42_DIR)/build; \
+	fi
+	@cmake $(MLX42_DIR) -B $(MLX42_DIR)/build -DCMAKE_BUILD_TYPE=Release
+	@$(MAKE) -C $(MLX42_DIR)/build -j4
+
+# Vérification GLFW (exécutée une seule fois)
+$(CHECK_GLFW_STAMP):
+	@echo "Vérification de GLFW..."
+	@if ! brew list glfw >/dev/null 2>&1; then \
+		echo "$(RED)GLFW non trouvé. Installation en cours...$(NC)"; \
+		brew install glfw; \
+	else \
+		echo "$(GREEN)GLFW détecté à: $(GLFW_PREFIX)$(NC)"; \
+	fi
+	@touch $(CHECK_GLFW_STAMP)
+
+# Installation des dépendances
+install_deps:
+	@echo "$(YELLOW)Installation des dépendances...$(NC)"
+	@if ! command -v brew >/dev/null 2>&1; then \
+		echo "$(RED)Homebrew n'est pas installé. Veuillez l'installer d'abord.$(NC)"; \
+		echo "$(YELLOW)Visitez: https://brew.sh$(NC)"; \
+		exit 1; \
+	fi
+	@brew install glfw cmake
+	@echo "$(GREEN)Dépendances installées avec succès!$(NC)"
+
+# Nettoyage
+clean:
+	@echo "$(RED)Nettoyage des fichiers objets...✔️$(NC)"
+	@rm -f $(OBJS)
+	@$(MAKE) -s -C $(LIBFT_DIR) clean
+
+fclean: clean
+	@echo "$(RED)Nettoyage complet...✔️$(NC)"
+	@rm -f $(NAME)
+	@$(MAKE) -s -C $(LIBFT_DIR) fclean
+	@rm -rf $(MLX42_DIR)/build
+	@rm -f $(CHECK_GLFW_STAMP)
+
+# Recompilation complète
+re: fclean all
+
+# Règles de débogage
+debug: CFLAGS += -DDEBUG -fsanitize=address
+debug: re
+
+# Affichage des informations système
+info:
+	@echo "$(YELLOW)Informations système:$(NC)"
+	@echo "Compilateur: $(CC)"
+	@echo "Flags: $(CFLAGS)"
+	@echo "Architecture: $(shell uname -m)"
+	@echo "GLFW Path: $(GLFW_PREFIX)"
+	@echo "GLFW disponible: $(GLFW_EXISTS)"
+
+# Test de compilation sans exécution
+test_compile: $(LIBFT) $(MLX42_LIB) $(OBJS)
+	@echo "$(GREEN)Test de compilation réussi!$(NC)"
+
+# Aide
+help:
+	@echo "$(YELLOW)Makefile Cub3D - Commandes disponibles:$(NC)"
+	@echo "  all          - Compile le projet principal"
+	@echo "  clean        - Supprime les fichiers objets"
+	@echo "  fclean       - Nettoyage complet"
+	@echo "  re           - Recompilation complète"
+	@echo "  debug        - Compilation avec débogage"
+	@echo "  install_deps - Installe les dépendances"
+	@echo "  info         - Affiche les informations système"
+	@echo "  test_compile - Test de compilation"
+	@echo "  help         - Affiche cette aide"
+
+# Déclaration des règles non-fichiers
+.PHONY: all clean fclean re debug info test_compile help install_deps
+
+# ASCII Art avec dégradé de couleurs
+ascii_art:
+	@clear
+	@bash -c '\
+	text="CUB3D"; \
+	len=$${#text}; \
+	i=0; \
+	while [ $$i -lt $$len ]; do \
+		printf "\033[38;5;82m%s\033[0m " "$${text:$$i:1}"; \
+		sleep 0.05; \
+		i=$$((i+1)); \
+	done; \
+	printf "\n"; \
+	'
+	@printf "\033[38;5;82m                                      bbbbbbbb                                           dddddddd \n"
+	@printf "\033[38;5;118m        CCCCCCCCCCCCC                 b::::::b             333333333333333               d::::::d \n"
+	@printf "\033[38;5;154m     CCC::::::::::::C                 b::::::b            3:::::::::::::::33             d::::::d \n"
+	@printf "\033[38;5;190m   CC:::::::::::::::C                 b::::::b            3::::::33333::::::3            d::::::d \n"
+	@printf "\033[38;5;226m  C:::::CCCCCCCC::::C                  b:::::b            3333333     3:::::3            d::::::d  \n"
+	@printf "\033[38;5;220m C:::::C       CCCCCCuuuuuu    uuuuuu  b:::::bbbbbbbbb                3:::::3    ddddddddd:::::d  \n"
+	@printf "\033[38;5;214mC:::::C              u::::u    u::::u  b::::::::::::::bb              3:::::3  dd::::::::::::::d  \n"
+	@printf "\033[38;5;208mC:::::C              u::::u    u::::u  b::::::::::::::::b     33333333:::::3  d::::::::::::::::d  \n"
+	@printf "\033[38;5;202mC:::::C              u::::u    u::::u  b:::::bbbbb:::::::b    3:::::::::::3  d:::::::ddddd:::::d  \n"
+	@printf "\033[38;5;196mC:::::C              u::::u    u::::u  b:::::b    b::::::b    33333333:::::3 d::::::d    d:::::d  \n"
+	@printf "\033[38;5;160mC:::::C              u::::u    u::::u  b:::::b     b:::::b            3:::::3d:::::d     d:::::d  \n"
+	@printf "\033[38;5;124mC:::::C              u::::u    u::::u  b:::::b     b:::::b            3:::::3d:::::d     d:::::d  \n"
+	@printf "\033[38;5;88m C:::::C       CCCCCCu:::::uuuu:::::u  b:::::b     b:::::b            3:::::3d:::::d     d:::::d  \n"
+	@printf "\033[38;5;52m  C:::::CCCCCCCC::::Cu:::::::::::::::uub:::::bbbbbb::::::b3333333     3:::::3d::::::ddddd::::::dd \n"
+	@printf "\033[38;5;52m   CC:::::::::::::::C u:::::::::::::::ub::::::::::::::::b 3::::::33333::::::3 d:::::::::::::::::d \n"
+	@printf "\033[38;5;52m     CCC::::::::::::C  uu::::::::uu:::ub:::::::::::::::b  3:::::::::::::::33   d:::::::::ddd::::d \n"
+	@printf "\033[38;5;52m        CCCCCCCCCCCCC    uuuuuuuu  uuuubbbbbbbbbbbbbbbb    333333333333333      ddddddddd   ddddd \n"
+	@printf "\033[0m\n"
+	@printf "                                                                         by: \033[38;5;82mjquinodo && rtari-ca\033[0m\n"
+
+# ASCII animation intro
+
+	@echo "\033[38;5;118m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+	@echo "\033[38;5;46m                        🌿  HISTOIRE : GREEN DELIRIUM VIRUS  🌿"
+	@echo "\033[38;5;118m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+	@sleep 0.5
+	@echo " "
+	@echo "\033[38;5;82mUn souffle étrange s'est levé dans la forêt..."
+	@sleep 1.
+	@echo "\033[38;5;82mContaminé par une plante toxique, ton corps lutte."
+	@sleep 1.
+	@echo "\033[38;5;154mLe virus \033[1m\033[38;5;118m-> GREEN DELIRIUM <-\033[0m\033[38;5;154m s'est infiltré en toi."
+	@sleep 1.2
+	@echo "\033[38;5;190mIl ronge ta vision, corrompt ta perception..."
+	@sleep 1.2
+	@echo "\033[38;5;226mBientôt, tout ne sera plus qu'un brouillard vert."
+	@sleep 1.3
+	@echo "\033[38;5;208mIl te reste exactement \033[1m\033[38;5;196m3 minutes\033[0m\033[38;5;208m avant la paralysie complète !"
+	@sleep 1.3
+	@echo "\033[38;5;202mTon seul espoir : trouver le chef des affreux de la forêt."
+	@sleep 1
+	@echo "\033[38;5;160mC’est le seul qui possède encore ses feuilles vertes…"
+	@sleep 1
+	@echo "\033[38;5;124mSauras-tu le reconnaître avant qu’il ne soit trop tard ?"
+	@sleep 1
+	@echo "\033[38;5;88mExplore, combats, et sauve ta vie !"
+	@sleep 1.3
+	@echo ""
+	@echo "                 BONNE CHANCE "
+		@echo ""
+	@echo "\033[38;5;154mPour activer ce mode de survie : \033[38;5;46mAppuie sur la touche [P]"
+	@sleep 1
+	@echo "\033[0m"
+
+	@echo ""
+
+	@for i in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27; do \
+		case $$i in \
+			1) printf "🍃         \r";; \
+			2) printf "  🍂       \r";; \
+			3) printf "    🍃     \r";; \
+			4) printf "      🍂   \r";; \
+			5) printf "        🍃 \r";; \
+			6) printf "          🌿\r";; \
+			7) printf "            L         \r";; \
+			8) printf "              E       \r";; \
+			9) printf "                 T     \r";; \
+			10) printf "                   S   \r";; \
+			11) printf "                      🍃  \r";; \
+			12) printf "                        G\r";; \
+			13) printf "                           O     \r";; \
+			14) printf "                              🍃         \r";; \
+			15) printf "                                🍂       \r";; \
+			16) printf "                                   🍃     \r";; \
+			17) printf "                                     🍂   \r";; \
+			18) printf "                                        🍃 \r";; \
+			19) printf "                                          🌿\r";; \
+			20) printf "                                            🍃         \r";; \
+			21) printf "                                               🍂       \r";; \
+			22) printf "                                                  🍃     \r";; \
+			23) printf "                                                    🍂   \r";; \
+			24) printf "                                                      🍃  \r";; \
+			25) printf "                                                        🌿\r";; \
+			26) printf "                                                           🌿     \r";; \
+			27) printf " 🍃  🍂  🍃  🍃  🌿 LET'S GO 🍃  🍂  🌿  🍂  🍃  🌿  🍂  🍃  🌿\r";; \
+		esac; \
+		sleep 0.1; \
+	done
+	@echo ""
+	@echo "\033[38;5;82m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+

@@ -1,0 +1,12 @@
+NO ./textures/north.png
+SO ./textures/south.png
+WE ./textures/west.png
+EA ./textures/east.png
+DO ./textures/door.png
+F 220,100,0
+C 225,30,0
+
+0111111
+1000001
+100N001
+1111111
