@@ -1,0 +1,8 @@
+ligne num:1
+    ligne num:2
+         ligne num:3
+prochaine ligne = vide :
+
+sp : +"*ç%&/()=?=(/&%ç*)
+11111--22--33--44--5555-666
+Enorme ligne : Born2beRoot Le but de ce projet est de créer une machine virtuelle en utilisant "Virtual Box".Si vous êtes comme moi et que vous ne savez rien en informatique , bienvenue !Quand j'ai lu le sujet B2BR pour la première fois, j'étais complètement perdue et je ne savais pas par où commencer... mdr. Je vais faire de mon mieux pour m'assurer que vous ne soyez pas aussi perdue que moi. Et n'oubliez pas : essayez de comprendre ce que vous faites autant que possible :)Alors... Plongeons dans un tout nouveau sujet, qui n'a plus grand chose à voir avec la programmation CNous allons d'abord passer en revue tous les termes (inconnus) utilisés dans le sujet. Le but est de comprendre ce que nous faisons et de pouvoir utiliser ces connaissances pour construire notre machine virtuelle. Nous allons ensuite installer notre machine virtuelle et commencer par faire ce qui est demandé dans le sujet.
