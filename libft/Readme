@@ -1,0 +1,58 @@
+# 🧮 Libft
+
+> Premier projet de l'école 42 — recréer une bibliothèque standard en C.
+
+---
+
+## 🎯 Objectif pédagogique
+
+Le but de **Libft** est de comprendre en profondeur le fonctionnement des fonctions de la librairie standard du langage C et d'apprendre à les réécrire soi-même.  
+Ce projet constitue la base de tous les projets suivants de 42 : il s'agit de créer sa propre bibliothèque de fonctions réutilisables.
+
+---
+
+## 📚 Contenu du projet
+
+Le projet consiste à réimplémenter un ensemble de fonctions de la librairie standard C (`<string.h>`, `<ctype.h>`, `<stdlib.h>`, etc.), puis d’y ajouter des fonctions utilitaires personnelles.
+
+### Partie 1 — Fonctions de la libc
+Recode des fonctions telles que :
+- `memset`, `memcpy`, `memmove`
+- `strlen`, `strchr`, `strrchr`, `strncmp`, `strnstr`
+- `toupper`, `tolower`
+- `atoi`, `calloc`, `strdup`
+
+### Partie 2 — Fonctions supplémentaires
+Création de fonctions plus avancées pour la manipulation de chaînes :
+- `ft_substr`, `ft_strjoin`, `ft_strtrim`
+- `ft_split`
+- `ft_itoa`
+- `ft_strmapi`, `ft_striteri`
+
+### Partie bonus — Listes chaînées (`t_list`)
+Création d'une série de fonctions pour manipuler une liste chaînée :
+- `ft_lstnew`, `ft_lstadd_front`, `ft_lstsize`, `ft_lstlast`
+- `ft_lstadd_back`, `ft_lstdelone`, `ft_lstclear`, `ft_lstiter`, `ft_lstmap`
+
+---
+
+## 🧠 Compétences développées
+
+- Compréhension de la mémoire en C (stack, heap, pointeurs)
+- Gestion manuelle de l’allocation et libération
+- Manipulation de chaînes de caractères et de structures
+- Rigueur dans le respect de la norme et du style de code
+- Construction et maintenance d’une bibliothèque réutilisable
+
+---
+
+## ⚙️ Compilation & Utilisation
+
+### Compilation
+
+```bash
+make            # Compile libft.a
+make bonus      # Compile avec les fonctions bonus
+make clean      # Supprime les fichiers objets (.o)
+make fclean     # Supprime les fichiers objets et libft.a
+make re         # Recompile complètement
