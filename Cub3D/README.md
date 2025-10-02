@@ -1,7 +1,7 @@
 # Cub3D ![42 Badge](https://github.com/Julien-Quinodoz/42-project-badges/blob/main/badges/cub3dm.png)</a>
 
 > Projet de l'école 42 — créer un petit jeu 3D en C à la manière de Wolfenstein 3D.
-## Collaborateurs
+## Collaboration
 
 Réalisé en collaboration avec **[Rodrigo Tari Carderera](https://github.com/Rodrigotari1)**
 
