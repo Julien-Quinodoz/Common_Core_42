@@ -1,6 +1,9 @@
 # Minishell ![42 Badge](https://github.com/Julien-Quinodoz/42-project-badges/blob/main/badges/minishelle.png)</a>
 
 > Projet de l'école 42 — créer un petit shell Unix minimaliste en C.
+## Collaboration
+
+Réalisé en collaboration avec **[Rodrigo Tari Carderera](https://github.com/Rodrigotari1)**
 
 ---
 
