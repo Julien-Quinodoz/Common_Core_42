@@ -54,4 +54,4 @@ Il permet de travailler sur :
 1. **Mettre à jour le serveur** :
 
 ```bash
-sudo apt update && sudo apt upgrade -y
+sudo apt update && sudo apt upgrade -y 
