@@ -49,9 +49,4 @@ Il permet de travailler sur :
 - Machine virtuelle Linux (Ubuntu/Debian) ou serveur physique.
 - Accès root ou sudo.
 
-### Étapes principales
 
-1. **Mettre à jour le serveur** :
-
-```bash
-sudo apt update && sudo apt upgrade -y 
