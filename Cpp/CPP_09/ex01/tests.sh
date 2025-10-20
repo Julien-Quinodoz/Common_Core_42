@@ -22,7 +22,7 @@ testExpr() {
 testExpr "8 9 * 9 - 9 - 9 - 4 - 1 +" "42"
 testExpr "7 7 * 7 - " "42"
 testExpr "1 2 * 2 / 2 * 2 4 - +" "0"
-testExpr "(1 + 1)" "Error: malformed expression"
+testExpr "(1 + 1)" "Error: mauvaise expression !"
 testExpr "2 4 * 8 +" "16"
 testExpr "2 4 8 + * " "24"
 testExpr "3 2 * 1   1 -" "Error: éléments restants"

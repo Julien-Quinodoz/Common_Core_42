@@ -6,7 +6,7 @@
 /*   By: jquinodo <jquinodo@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:39:19 by jquinodo          #+#    #+#             */
-/*   Updated: 2025/09/24 12:40:09 by jquinodo         ###   ########.fr       */
+/*   Updated: 2025/10/14 19:07:07 by jquinodo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,17 @@ affiche la séquence d'entrée, la trie par fusion-insertion pour std::vector et
 affiche la séquence triée et mesure le temps pour chaque conteneur.
 
 --> std::vector : Ses éléments sont stockés dans un bloc de mémoire contigu
-ce qui le rend ultra-rapide pour l'accès aléatoire et les tris
-Mais, l'ajout ou la suppression d'éléments au début ou au milieu est lent
+	ce qui le rend ultra-rapide pour l'accès aléatoire et les tris
+	Mais, l'ajout ou la suppression d'éléments au début ou au milieu est lent
 
 --> std::deque : Ses éléments sont stockés dans plusieurs blocs de mémoire,
-ce qui permet des ajouts ou des suppressions très rapides aux deux extrémités (plus lent au milieux)
-Moins efficace que *vector* pour les opérations qui nécessitent un parcours contigu, comme le tri   */
+	ce qui permet des ajouts ou des suppressions très rapides aux deux extrémités (plus lent au milieux)
+	Moins efficace que *vector* pour les opérations qui nécessitent un parcours contigu, comme le tri
+
+	--> Accès : vector ~30% plus rapide
+	--> Parcours : vector ~20% plus rapide
+	--> push_back : similaire
+	--> push_front : deque infiniment plus rapide     */
 
 int main(int ac , char **av)
 {
@@ -54,7 +59,7 @@ int main(int ac , char **av)
 	std::vector<int> vector_data;
 	std::deque <int> deque__data;
 
-/// --> Création data
+// --> Création data
 	for(int i = 1; i < ac; i++)
 	{
 		for(size_t j = 0; j < strlen(av[i]); j++)
@@ -72,15 +77,15 @@ int main(int ac , char **av)
 		}
 		if (atol(av[i]) > std::numeric_limits<int>::max())
 		{
-			std::cerr << R "Error: " << av[i] << " exceed numeric limit ! max : --> " E  << std::numeric_limits<int>::max() << std::endl;
+			std::cerr << R "Error: " << av[i] << " int-max dépassé : --> " E  << std::numeric_limits<int>::max() << std::endl;
 			return (1);
 		}
 
-		vector_data.push_back(atol(av[i]));
-		deque__data.push_back(atol(av[i]));
+		vector_data.push_back(atoi(av[i]));
+		deque__data.push_back(atoi(av[i]));
 	}
 
-/// Contrôle si des nombres sont en double
+// Contrôle si des nombres sont en double
 	std::vector<int> sorted;
 	std::copy(vector_data.begin(), vector_data.end(), std::back_inserter(sorted));
 	std::sort(sorted.begin(), sorted.end());
@@ -93,43 +98,43 @@ int main(int ac , char **av)
 		return (1);
 	}
 
-/// Before :
+// Before : Affiche la liste des nombre avant
 
 	std::cout << J "Before:\t" E ;
 	for (size_t i = 0; i < vector_data.size(); i++)
 		std::cout << vector_data[i] << " ";
 	std::cout << std::endl;
 
-/// --> std:: VECTOR
+// --> std:: VECTOR
 
-	timestamp_t start = get_timestamp();  // START timer
+	timestamp_t start = get_timestamp();  								// START timer
 
-	PmergeMe<int, std::vector> vector_merge;
-	std::vector<int> vector_sorted = vector_merge.sort(vector_data);
+	PmergeMe<int, std::vector> vector_merge;							// objet de classe PmergeMe template
+	std::vector<int> vector_sorted = vector_merge.sort(vector_data);	// méthode sort avec vector
 
 	std::cout << G "After :\t" E ;
 
-	for (size_t i = 0; i < vector_sorted.size(); i++)
+	for (size_t i = 0; i < vector_sorted.size(); i++) 					// Affiche la liste des nombre après
 	std::cout << vector_sorted[i] << " " ;
 
-	timestamp_t end = get_timestamp(); // STOP timer
+	timestamp_t end = get_timestamp(); 									// STOP timer
 
 	std::cout << std::endl << B "Time to process a range of " J << vector_data.size() ;
 	std::cout << B " elements with std::" G "vector : " J << end - start << E " us" << std::endl;
 
-/// --> std:: DEQUE
+// --> std:: DEQUE
 
-	start = get_timestamp();  // START timer
+	start = get_timestamp();  											// START timer
 
-	PmergeMe<int, std::deque> deque_merge;
-	std::deque<int> deque_sorted = deque_merge.sort(deque__data);
+	PmergeMe<int, std::deque> deque_merge;								// objet de classe PmergeMe template
+	std::deque<int> deque_sorted = deque_merge.sort(deque__data);		// méthode sort avec deque
 
-	end = get_timestamp(); // STOP time
+	end = get_timestamp();												 // STOP time
 
 	std::cout << B "Time to process a range of " J << deque__data.size() ;
-	std::cout << B " elements with std::"G"deque  : " J << end - start <<  E " us" << std::endl;
+	std::cout << B " elements with std::" G "deque  : " J << end - start <<  E " us" << std::endl;
 
-/// --> CONTROLES
+// --> CONTROLES
 
 		for (size_t i = 0; i < sorted.size(); i++)
 	{
@@ -144,5 +149,7 @@ int main(int ac , char **av)
 		std::cerr << R "Error: bad sort" E  << std::endl;
 		return (1);
 	}
+
+	return 0;
 }
 

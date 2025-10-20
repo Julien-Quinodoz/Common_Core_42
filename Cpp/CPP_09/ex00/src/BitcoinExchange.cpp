@@ -6,7 +6,7 @@
 /*   By: jquinodo <jquinodo@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 17:51:20 by jquinodo          #+#    #+#             */
-/*   Updated: 2025/09/24 11:36:40 by jquinodo         ###   ########.fr       */
+/*   Updated: 2025/10/15 13:58:30 by jquinodo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,14 @@ std::string BitcoinExchange::db_Path(void) const{
 }
 
 void BitcoinExchange::construct_data_base() {
-	std::ifstream copy_path(this->_db_path);			// Copy le chemin dans copy_path
+	std::ifstream copy_path(this->_db_path.c_str());			// Copy le chemin dans copy_path
+
 
 	if (!copy_path.is_open())
+	{
 		throw BitcoinExchange::Cant_Read_Data_File(); 	// exception si échec ouverture
-
 		this->_db.clear();								// On vide la map interne avant de recharger les données
+	}
 
 	std::string line;
 
@@ -61,7 +63,7 @@ void BitcoinExchange::construct_data_base() {
 
 		std::string date, value;
 
-		if (!std::getline(copy_line, date, ',') || !std::getline(copy_line, value, ',')) //teste date et value si faux → on passe à l'IT  suivante
+		if (!std::getline(copy_line, date, ',') || !std::getline(copy_line, value, ',')) //teste et copie date et value si faux → on passe à l'IT  suivante
 			continue;
 
 		trim(date);								// Trim pour enlever espaces et tabs autour

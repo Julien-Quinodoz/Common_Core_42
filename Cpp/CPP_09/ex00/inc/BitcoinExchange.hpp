@@ -6,7 +6,7 @@
 /*   By: jquinodo <jquinodo@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 17:52:22 by jquinodo          #+#    #+#             */
-/*   Updated: 2025/09/24 09:46:47 by jquinodo         ###   ########.fr       */
+/*   Updated: 2025/10/14 09:47:31 by jquinodo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ class BitcoinExchange{
 	public:
 		virtual const char* what(void) const throw();
 	};
-
 };
 
 #endif

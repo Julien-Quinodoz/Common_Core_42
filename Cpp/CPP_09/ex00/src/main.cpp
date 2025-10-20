@@ -6,7 +6,7 @@
 /*   By: jquinodo <jquinodo@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 17:56:40 by jquinodo          #+#    #+#             */
-/*   Updated: 2025/09/24 10:52:49 by jquinodo         ###   ########.fr       */
+/*   Updated: 2025/10/14 10:36:39 by jquinodo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
 	}
 
 
-	// Open file
+	// Ouvre le fichier
 	std::string line;
 	std::ifstream inputfile(argv[1]);
 
@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
 		return (1);
 	}
 
-	// Read line by line
+	// Read ligne par ligne
 	int ctr = -1;
 	while (getline(inputfile,line))
 	{
@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
 
 		bool ignore = false;
 
-		// ignorer lignes vides ou commentaires
+		// ignorer lignes vides ou commentaires #
 		std::string original = line;
 		trim(line);
 		if (line.empty() || (!line.empty() && line[0] == '#'))
@@ -79,6 +79,7 @@ int main(int argc, char *argv[])
 			std::cerr << R "Error: bad input" J " => " E << original << std::endl;
 			continue;
 		}
+		// Sépare date et value en oubliant le |
 		std::string date = line.substr(0, pipePos);
 		std::string value = line.substr(pipePos + 1);
 
@@ -98,11 +99,11 @@ int main(int argc, char *argv[])
 			std::cerr << R "Error: bad input" J " => " E << original << std::endl;
 			ignore = true;
 		}
-		// Parse and validate value
+		// Parsing validation
 		if (!ignore)
 		{
 			float tmp;
-			if (!try_parse_float(value, tmp))
+			if (!try_parse_float(value, tmp))		//copy value dans tmp (float?)
 			{
 				std::cerr << R "Error: bad input" J " => " E << original << std::endl;
 				ignore = true;

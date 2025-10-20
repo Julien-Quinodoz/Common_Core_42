@@ -6,7 +6,7 @@
 /*   By: jquinodo <jquinodo@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 12:51:36 by jquinodo          #+#    #+#             */
-/*   Updated: 2025/09/24 12:18:51 by jquinodo         ###   ########.fr       */
+/*   Updated: 2025/10/14 11:33:59 by jquinodo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,7 @@ class RPN
 	RPN(const RPN &src);
 	RPN & operator = (const RPN &src);
 
-
 	float result(const std::string expr);
-
-	
 
 	class Bad_expression : public std::exception{
 		public:
@@ -48,7 +45,6 @@ class RPN
 		public:
 			virtual const char * what(void) const throw();
 	};
-
 };
 
 #endif

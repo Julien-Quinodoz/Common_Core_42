@@ -6,7 +6,7 @@
 /*   By: jquinodo <jquinodo@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 12:15:42 by jquinodo          #+#    #+#             */
-/*   Updated: 2025/09/24 12:30:04 by jquinodo         ###   ########.fr       */
+/*   Updated: 2025/10/14 11:34:41 by jquinodo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 #include <iostream>
 
 /*
-Le programme évalue une expression en notation polonaise inversée en argument unique.
-Il prend en charge les opérations à un seul chiffre avec les suffixes +, -, * et / $
+Le programme évalue une expression en notation polonaise inversée en argument
+Il prend en charge les opérations à un seul chiffre avec les suffixes +, -, * et / 
 et gère les erreurs (expression non valide, division par zéro, évaluation incomplète).
 */
 
