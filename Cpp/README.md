@@ -1,49 +1,55 @@
-# C++ Module ![42 Badge](https://github.com/Julien-Quinodoz/42-project-badges/blob/main/badges/cppe.png)</a>
+# C++ Mini-Piscine ![42 Badge](https://github.com/Julien-Quinodoz/42-project-badges/blob/main/badges/cppe.png)
 
-> Projet de l'école 42 — découvrir les bases de la programmation orientée objet en C++.
+> Série de 9 modules — découverte progressive du langage C++ (standard C++98) et de la programmation orientée objet.
 
 ---
 
 ## 🎯 Objectif pédagogique
 
-Le projet **C++ Module** a pour but d’apprendre les **fondamentaux de la programmation orientée objet (POO)** en C++ :
-- classes, objets et encapsulation,
-- constructeurs, destructeurs et surcharge d’opérateurs,
-- héritage et polymorphisme,
-- gestion de la mémoire et bonnes pratiques de C++.
+La **mini-piscine C++** est une introduction complète à la **programmation orientée objet** et aux **concepts fondamentaux du C++**.  
+Elle permet de comprendre la logique du langage à travers 9 modules progressifs, chacun axé sur un concept clé du C++98.
 
-Ce projet sert de base pour les modules avancés de C++ dans le cursus 42.
+L’objectif est de :
+
+- découvrir la **syntaxe et les mécanismes du C++**,  
+- comprendre la **programmation orientée objet**,  
+- apprendre à structurer du code avec des **classes, héritages et polymorphisme**,  
+- manipuler les **exceptions**, les **templates** et les **conteneurs STL**,  
+- écrire un code clair, réutilisable et maintenable.  
 
 ---
 
-## 📚 Contenu du projet
+## 📦 Mini-Piscine C++ — 9 modules  limité en C++98 (résumé des concepts)
 
-- Fichiers `.cpp` → implémentation des classes et méthodes.
-- Fichiers `.hpp` → headers contenant déclarations des classes.
-- `main.cpp` → programme de test des classes et fonctionnalités.
-- `Makefile` → compilation et gestion des dépendances.
-
-### Exemples de classes possibles
-
-- `Animal`, `Dog`, `Cat` → démonstration d’héritage et polymorphisme
-- `Brain` → gestion de ressources et deep copy
-- `Weapon`, `HumanA`, `HumanB` → manipulation d’objets et références
+| Module | Concept principal |
+|:------:|-------------------|
+| **Module 0** | Différences C++ / C, syntaxe de base, spécificités du C++ |
+| **Module 1** | Allocation mémoire, références, pointeurs aux membres |
+| **Module 2** | Polymorphisme ad hoc, surcharge d’opérateurs, classes canoniques |
+| **Module 3** | Héritage simple entre classes |
+| **Module 4** | Polymorphisme de sous-type, classes abstraites et interfaces |
+| **Module 5** | Exceptions : `try`, `throw`, `catch` |
+| **Module 6** | Différents types de cast (`static_cast`, `const_cast`, etc.) |
+| **Module 7** | Templates de fonctions et classes |
+| **Module 8** | Containers, itérateurs, library d’algorithmes (STL) |
+| **Module 9** | Implémentation pratique de conteneurs (map, vecteurs, itérateurs) |
 
 ---
 
 ## 🧠 Compétences développées
 
-- Programmation orientée objet (POO) en C++
-- Gestion de la mémoire et `new` / `delete`
-- Héritage et polymorphisme
-- Surcharge d’opérateurs et constructeurs
-- Structuration d’un projet C++ clair et modulable
+- Maîtrise du **paradigme orienté objet**  
+- Compréhension du **modèle mémoire** en C++  
+- Gestion des **exceptions** et du **cycle de vie des objets**  
+- Conception de classes **robustes et réutilisables**  
+- Familiarisation avec la **STL** et les **itérateurs**  
+- Application rigoureuse des **bonnes pratiques C++98**
 
 ---
 
-## ⚙️ Compilation & Utilisation
+## ⚙️ Compilation
 
-### Compilation
+Les exercices se compilent avec le standard **C++98** :
 
 ```bash
-make
+c++ -Wall -Wextra -Werror -std=c++98 fichier.cpp -o programme

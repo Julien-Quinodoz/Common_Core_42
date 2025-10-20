@@ -33,10 +33,3 @@ Il permet de travailler sur :
 
 ---
 
-## ⚙️ Compilation & Utilisation
-
-### Compilation
-
-```bash
-gcc -Wall -
-

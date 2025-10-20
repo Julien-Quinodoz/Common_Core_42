@@ -3,47 +3,91 @@
 > Projet de l'école 42 — trier une pile d'entiers avec un nombre minimal d'opérations.
 
 ---
+# 🧩 Push_swap  
+![42 Badge](https://raw.githubusercontent.com/Julien-Quinodoz/42-project-badges/main/badges/push_swapm.png)
+
+> Projet de l'école 42 — trier une pile d'entiers avec un nombre minimal d'opérations.
+
+---
 
 ## 🎯 Objectif pédagogique
 
-Le projet **Push_swap** a pour but de créer un programme capable de **trier une pile d’entiers** en utilisant **un ensemble limité d’instructions**.
-Il permet de travailler sur :
-- la manipulation de **piles et listes chaînées**
-- l’optimisation d’algorithmes pour minimiser le nombre d’opérations
-- la rigueur dans la gestion de la mémoire
-- la conception d’un programme modulaire et performant
+Le projet **Push_swap** consiste à créer un programme capable de **trier une pile d'entiers** en utilisant un **ensemble limité d'instructions**, tout en **minimisant le nombre total d’opérations** nécessaires.
+
+Ce projet permet de travailler sur :
+
+- la **manipulation de structures de données dynamiques** (piles et listes chaînées),  
+- la **conception d’algorithmes efficaces** et leur optimisation,  
+- la **gestion stricte de la mémoire** en C,  
+- la **rigueur du code et la modularité** d’un projet structuré.  
 
 ---
 
-## 📚 Contenu du projet
+## ⚙️ Contraintes et règles
 
-- `push_swap.c` → programme principal qui trie une pile d’entiers.
-- `checker.c` → programme secondaire pour vérifier que les instructions produisent une pile triée.
-- `utils.c` → fonctions utilitaires pour gérer les piles et opérations.
-- `push_swap.h` → header contenant prototypes et structures nécessaires.
+- Le tri doit être réalisé à l’aide de **deux piles uniquement** :
+  - **Pile A** : contient les entiers à trier.  
+  - **Pile B** : pile auxiliaire utilisée pendant le tri.  
 
-### Instructions autorisées
+- Les **seules instructions autorisées** (et à coder soit même) sont :  
 
-- `sa`, `sb`, `ss` → swap
-- `pa`, `pb` → push
-- `ra`, `rb`, `rr` → rotate
-- `rra`, `rrb`, `rrr` → reverse rotate
+sa : swap a — échange les deux premiers éléments du stack a  
+sb : swap b — échange les deux premiers éléments du stack b  
+ss : sa et sb simultanément  
+pa : push a — prend le premier élément de b et le place sur a  
+pb : push b — prend le premier élément de a et le place sur b  
+ra : rotate a — décale tous les éléments de a d’une position vers le haut  
+rb : rotate b — idem pour b  
+rr : ra et rb simultanément  
+rra : reverse rotate a — décale tous les éléments de a d’une position vers le bas  
+rrb : reverse rotate b — idem pour b  
+rrr : rra et rrb simultanément  
+
+- Aucune fonction de tri standard (`qsort`, `sort`, etc.) n’est autorisée.  
+- L’algorithme doit être **entièrement implémenté à la main**, en respectant les contraintes du sujet.  
+- Le programme doit être robuste face à des **entrées invalides** (doublons, caractères non numériques, etc.).
 
 ---
+
+## 🔢 Optimisation du tri
+
+Le défi principal du projet est de concevoir un **algorithme capable de trier efficacement la pile** en réduisant au maximum le nombre d’opérations.
+
+Plusieurs stratégies peuvent être adoptées selon la taille du jeu de données :
+
+- **Petites piles (≤ 5 éléments)** : approche basée sur un tri par insertion simple.  
+- **Grandes piles** : algorithmes plus complexes comme :
+- le **Radix Sort** (tri binaire par bits),  
+- ou le **tri par chunks**, qui découpe la pile en sous-groupes de valeurs.
+
+Des valeurs de référence existent pour évaluer les performances de ton programme :
+
+| Taille de la pile | Nombre de mouvements attendu (ordre de grandeur) |
+|:------------------:|:----------------------------------------------:|
+| 3 | ≤ 3 |
+| 5 | ≤ 12 |
+| 100 | < 700 |
+| 500 | < 5500 |
+
+Ces chiffres ne sont pas obligatoires mais représentent une **cible d’efficacité réaliste** pour un bon algorithme.
+
+---
+
+# Exemples d’utilisation
+./push_swap 3 2 5 1 4 34 -11 44 56 67 87 89 213 -54332 9 10 21
+
+
 
 ## 🧠 Compétences développées
 
-- Manipulation avancée de **listes chaînées**
-- Optimisation d’algorithmes et réflexion sur complexité
-- Gestion dynamique de la mémoire (`malloc`, `free`)
-- Conception d’un programme **robuste et testable**
-- Débogage et validation via des outils internes et externes
+Manipulation de piles et listes chaînées dynamiques
 
----
+Conception d’un algorithme de tri personnalisé
 
-## ⚙️ Compilation & Utilisation
+Analyse et optimisation algorithmique
 
-### Compilation
+Gestion de la mémoire en C (malloc, free)
 
-```bash
-make
+Application stricte de la norme 42 et d’une architecture modulaire
+
+

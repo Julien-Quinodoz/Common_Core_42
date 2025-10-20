@@ -6,12 +6,15 @@
 
 ## 🎯 Objectif pédagogique
 
-Le projet **Born2BeRoot** a pour but de te familiariser avec **l’administration d’un serveur Linux** et la sécurité réseau.
+Le projet **Born2BeRoot** a pour but de te familiariser avec les **fondamentaux de l’administration système** à travers la **mise en place d’une machine virtuelle Linux** sécurisée.
+
 Il permet de travailler sur :
-- la configuration d’un **serveur Linux** (utilisateurs, SSH, sudo, permissions),
-- la mise en place de services réseau sécurisés,
-- la gestion des **permissions et des droits**,
-- la compréhension de la sécurité informatique au niveau système.
+
+- l’installation et la configuration d’une **machine virtuelle** (Debian ou Rocky Linux),  
+- la gestion des **utilisateurs**, **groupes** et **droits sudo**,  
+- la configuration de **SSH** et des **pare-feux (UFW)**,  
+- la mise en place de **politiques de sécurité** (mots de passe, sudo, etc.),  
+- la surveillance du système via un **script de monitoring**.  
 
 ---
 
@@ -46,9 +49,4 @@ Il permet de travailler sur :
 - Machine virtuelle Linux (Ubuntu/Debian) ou serveur physique.
 - Accès root ou sudo.
 
-### Étapes principales
 
-1. **Mettre à jour le serveur** :
-
-```bash
-sudo apt update && sudo apt upgrade -y
